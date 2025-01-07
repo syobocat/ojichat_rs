@@ -1,6 +1,5 @@
-use once_cell::sync::Lazy;
-use std::collections::HashMap;
-pub static EMOJI_TYPE: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
+use std::{collections::HashMap, sync::LazyLock};
+pub static EMOJI_TYPE: LazyLock<HashMap<&str, &str>> = LazyLock::new(|| {
     let mut emoji_type = HashMap::new();
     emoji_type.insert("emoji_pos", "EMOJI_POS");
     emoji_type.insert("emoji_neg", "EMOJI_NEG");

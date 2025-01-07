@@ -1,6 +1,5 @@
-use once_cell::sync::Lazy;
-use std::collections::HashMap;
-pub static TAG_TYPE: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
+use std::{collections::HashMap, sync::LazyLock};
+pub static TAG_TYPE: LazyLock<HashMap<&str, &str>> = LazyLock::new(|| {
     let mut tag_type = HashMap::new();
     tag_type.insert("first_person", "FIRST_PERSON");
     tag_type.insert("day_of_week", "DAY_OF_WEEK");

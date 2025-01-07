@@ -1,8 +1,12 @@
 use super::pattern::onara::Onara;
 use super::pattern::onara_pattern;
 
-use lindera::tokenizer::Tokenizer;
-use lindera_core::core::viterbi::Mode;
+use lindera::{
+    dictionary::{load_dictionary_from_kind, DictionaryKind},
+    segmenter::Segmenter,
+    tokenizer::Tokenizer,
+};
+use lindera_dictionary::mode::Mode;
 use rand::{thread_rng, Rng};
 
 pub struct Generator {}
@@ -81,10 +85,16 @@ impl Generator {
         let mut rng = thread_rng();
         let mut result: String = "".to_string();
         // おじさんの文句の形態素解析に使われるなんて可哀そうなライブラリだな
-        let mut tokenizer = Tokenizer::new(Mode::Normal, "");
-        let tokens = tokenizer.tokenize(&*message);
-        for token in tokens {
-            let features = token.detail;
+        let dictionary = load_dictionary_from_kind(DictionaryKind::IPADIC)
+            .expect("Failed to load the dictionary");
+        let tokenizer = Tokenizer::new(Segmenter {
+            mode: Mode::Normal,
+            dictionary,
+            user_dictionary: None,
+        });
+        let tokens = tokenizer.tokenize(&*message).expect("Failed to tokenize");
+        for mut token in tokens {
+            let features = token.details();
             let mut hinshi_flag = false;
             for hinshi in config.target_hinshis.clone() {
                 if hinshi == features[0] {
@@ -93,10 +103,10 @@ impl Generator {
                 }
             }
             if hinshi_flag && rng.gen_range(1..100) <= config.rate {
-                result += token.text;
+                result += &token.text;
                 result += "、"
             } else {
-                result += token.text
+                result += &token.text
             }
         }
         result
