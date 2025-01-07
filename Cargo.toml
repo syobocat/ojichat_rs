@@ -19,7 +19,6 @@ license = "MIT"
 gimei = "0.2.0"
 kanaria = "0.2.0"
 lindera = { version = "0.38.1", features = ["ipadic"] }
-lindera-core = "0.33.0"
 lindera-dictionary = "0.38.1"
 rand = "0.8.5"
 regex = "1.11.1"
