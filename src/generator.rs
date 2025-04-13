@@ -7,7 +7,7 @@ use lindera::{
     tokenizer::Tokenizer,
 };
 use lindera_dictionary::mode::Mode;
-use rand::{thread_rng, Rng};
+use rand::{rng, Rng};
 
 pub struct Generator {}
 
@@ -52,8 +52,8 @@ impl Generator {
 
     fn get_random_firstname() -> String {
         let name = gimei::female();
-        let mut rng = thread_rng();
-        let n: i32 = rng.gen_range(0..2);
+        let mut rng = rng();
+        let n: i32 = rng.random_range(0..2);
         match n {
             0 => name.first.kanji,
             1 => name.first.katakana,
@@ -63,8 +63,8 @@ impl Generator {
     }
 
     fn get_random_name_suffix() -> &'static str {
-        let mut rng = thread_rng();
-        let n: i32 = rng.gen_range(0..99);
+        let mut rng = rng();
+        let n: i32 = rng.random_range(0..99);
         if n < 5 {
             // たまに呼び捨てにするおじさん
             ""
@@ -82,7 +82,7 @@ impl Generator {
         if config.rate == 0 {
             return message;
         }
-        let mut rng = thread_rng();
+        let mut rng = rng();
         let mut result: String = "".to_string();
         // おじさんの文句の形態素解析に使われるなんて可哀そうなライブラリだな
         let dictionary = load_dictionary_from_kind(DictionaryKind::IPADIC)
@@ -102,7 +102,7 @@ impl Generator {
                     break;
                 }
             }
-            if hinshi_flag && rng.gen_range(1..100) <= config.rate {
+            if hinshi_flag && rng.random_range(1..100) <= config.rate {
                 result += &token.text;
                 result += "、"
             } else {

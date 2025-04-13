@@ -18,9 +18,9 @@ license = "MIT"
 [dependencies]
 gimei = "0.2.0"
 kanaria = "0.2.0"
-lindera = { version = "0.38.1", features = ["ipadic"] }
-lindera-dictionary = "0.38.1"
-rand = "0.8.5"
+lindera = { version = "0.41.0", features = ["ipadic"] }
+lindera-dictionary = "0.41.0"
+rand = "0.9.0"
 regex = "1.11.1"
 
 [target.'cfg(wasm32)'.dependencies.getrandom]

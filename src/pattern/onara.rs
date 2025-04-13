@@ -28,7 +28,7 @@ impl Onara {
         ]
         .to_vec();
 
-        let mut rng = rand::thread_rng();
+        let mut rng = rand::rng();
         patterns.shuffle(&mut rng);
         let pattern = patterns.get(0).unwrap().clone();
         pattern

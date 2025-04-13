@@ -109,7 +109,7 @@ pub fn select_template(emotion: OjisanEmotion) -> &'static str {
             ]
         }
     }
-    let mut rng = rand::thread_rng();
+    let mut rng = rand::rng();
     messages.shuffle(&mut rng);
     messages[0]
 }

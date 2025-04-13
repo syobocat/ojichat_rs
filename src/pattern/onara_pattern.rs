@@ -25,8 +25,8 @@ impl OnaraPattern {
         for emotion in self.pattern {
             let mut tmp = onara_messages::select_template(emotion).to_string();
             if emotion != OjisanEmotion::GREETING {
-                let mut rng = rand::thread_rng();
-                let n: i32 = rng.gen_range(0..2);
+                let mut rng = rand::rng();
+                let n: i32 = rng.random_range(0..2);
                 tmp = self::OnaraPattern::katakana_katsuyou(tmp, n);
             }
             result = format!("{}{}", result, tmp);
@@ -42,7 +42,7 @@ impl OnaraPattern {
         for val in (*TAG_TYPE).values() {
             let count = result.split(&format!("{{{}}}", val)).count() - 1;
             for _ in 0..count {
-                let mut rng = rand::thread_rng();
+                let mut rng = rand::rng();
                 let mut selected_tags = tags::select_tags(val);
                 selected_tags.shuffle(&mut rng);
                 result = result.replace(&format!("{{{}}}", val), selected_tags[0]);
@@ -55,10 +55,10 @@ impl OnaraPattern {
         for val in (*EMOJI_TYPE).values() {
             let count = result.split(&format!("{{{}}}", val)).count() - 1;
             for _ in 0..count {
-                let mut rng = rand::thread_rng();
+                let mut rng = rand::rng();
                 let mut emoji_list = emoji_tag::select_tags(val);
 
-                let mut n: usize = rng.gen_range(0..emoji_num);
+                let mut n: usize = rng.random_range(0..emoji_num);
 
                 emoji_list.shuffle(&mut rng);
                 if n > emoji_list.len() {
